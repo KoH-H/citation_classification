@@ -5,6 +5,7 @@ import numpy as np
 import time
 import logging
 import random
+import os
 
 
 def setup_seed(seed):
@@ -18,18 +19,21 @@ def setup_seed(seed):
 
 
 def generate_submission(pre_list, filename, test_f1):
-    test_unique = pd.read_csv('/home/g19tka13/taskA/SDP_test.csv')
+    test_unique = pd.read_csv('/content/citation_classification/dataset/SDP_test.csv')
     submission = pd.DataFrame(columns=['unique_id', 'citation_class_label'])
     pre_label = pd.Series(pre_list)
     submission['unique_id'] = test_unique['unique_id']
     submission['citation_class_label'] = pre_label
-    submission.to_csv('/home/g19tka13/submission/{}_F1_{:.4f}_Time_{}.csv'.format(filename, test_f1,
+    submission.to_csv('/content/citation_classification/{}_F1_{:.4f}_Time_{}.csv'.format(filename, test_f1,
                                                                                         time.strftime('%m_%d_%H',
                                                                                               time.localtime(time.time()))),
                       sep=',', index=False, encoding='utf-8')
 
 
-def log_result(test_f1, best_model_f1=0, c_matrix=None, per_eval=None, logfile='../logging/output.log', lr=0.1, epoch=None, fun_name=None):
+def log_result(test_f1, best_model_f1=0, c_matrix=None, per_eval=None, logfile='output.log', lr=0.1, epoch=None, fun_name=None):
+    folder = os.path.exists(logfile)
+    if not folder:
+        os.mknod(logfile)
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
     handler = logging.FileHandler(logfile, mode='a')

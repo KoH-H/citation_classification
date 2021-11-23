@@ -3,6 +3,7 @@ from utils.util import *
 from utils.dataload import load_data
 from train_valid.dataset_valid import dataset_valid
 import time
+from sklearn.metrics import f1_score
 
 
 def dataset_train(model, token, data, criterion, optimize, n_epoch, au_weight, device, scheduler=None, model_path=None):
@@ -39,7 +40,7 @@ def dataset_train(model, token, data, criterion, optimize, n_epoch, au_weight, d
             train_t_tar = torch.LongTensor(t_tar)
             train_r_tar = torch.LongTensor(r_tar)
             s_tar = torch.LongTensor(s_tar)
-            main_output, au_output1 = model(t_sent, r_sen=r_sent, s_sen=s_sent, l=l)
+            main_output, au_output1 = model(t_sent, r_sen=r_sent, s_sen=s_sent, l=alpha)
             # L_o
             ori_loss = criterion(main_output, train_t_tar.to(device))
             # L_r

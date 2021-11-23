@@ -6,7 +6,7 @@ import pandas as pd
 import json
 import collections
 
-root_path = Path('/home/g19tka13/')
+root_path = Path('/content/citation_classification/dataset')
 section = root_path / 'sections-scaffold-train.jsonl'
 
 section_text = []
@@ -22,4 +22,4 @@ section_location = pd.DataFrame(columns=['citation_context', 'citation_class_lab
 for i in range(len(section_name)):
     section_location.loc[i] = {'citation_context': section_text[i],
                                'citation_class_label': section_name[i]}
-section_location.to_csv('../dataset/section_name.csv', sep=',', index=False)
+section_location.to_csv('/content/citation_classification/dataset/section_name.csv', sep=',', index=False)

@@ -1,6 +1,6 @@
 import sklearn
 import random
-from utils.utils import *
+from utils.util import *
 import nltk
 from nltk.corpus import stopwords
 import collections
@@ -74,10 +74,10 @@ def generate_batch_data(data, batch_size=16):
 def load_data(batch_size=None):
     assert batch_size is not None
     data = {}
-    path = Path('/home/g19tka13') # root path
-    train_set = pd.read_csv(path / 'taskA/SDP_train.csv', sep=',')
-    test = pd.read_csv(path / 'taskA/SDP_test.csv', sep=',').merge(
-        pd.read_csv(path / 'taskA/sample_submission.csv'), on='unique_id')
+    path = Path('/content/citation_classification') # root path
+    train_set = pd.read_csv(path / 'dataset/SDP_train.csv', sep=',')
+    test = pd.read_csv(path / 'dataset/SDP_test.csv', sep=',').merge(
+        pd.read_csv(path / 'dataset/sample_submission.csv'), on='unique_id')
     train_set = sklearn.utils.shuffle(train_set, random_state=0).reset_index(drop=True)
     train = train_set.loc[:int(train_set.shape[0] * 0.8) - 1]
     print(train['citation_class_label'].value_counts())
@@ -88,7 +88,7 @@ def load_data(batch_size=None):
     reverse_data = delete_aug(reverse_data)
     data['reverse'] = generate_batch_data(reverse_data, batch_size)
 
-    mul_sec = pd.read_csv(path / 'taskA/section_name.csv')
+    mul_sec = pd.read_csv(path / 'dataset/section_name.csv')
     mul_num = train.shape[0]
     mul_section = mul_sec.head(mul_num)
     mul_section_batch = generate_batch_data(mul_section, mul_section.shape[0] // (train.shape[0]//batch_size))

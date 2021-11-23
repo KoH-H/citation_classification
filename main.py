@@ -7,7 +7,7 @@ from train_valid.dataset_train import dataset_train
 from train_valid.dataset_valid import dataset_valid
 from utils.dataload import *
 from utils.util import *
-from sklearn.metrics import classification_report
+from sklearn.metrics import classification_report, confusion_matrix
 import optuna
 import time
 
@@ -74,7 +74,7 @@ def main_run(path, dev):
 if __name__ == "__main__":
     tst = time.time()
     device = torch.device("cuda:0" if torch.cuda.is_available() else 'cpu')
-    run_optuna('/home/g19tka13/modelpth/citation_mul_rev_model.pth', device)
-    # main_run('/home/g19tka13/modelpth/citation_mul_rev_model.pth', device)
+    run_optuna('/content/citation_classification/citation_mul_rev_model.pth', device)
+    # main_run('/content/citation_classification/citation_mul_rev_model.pth', device)
     ten = time.time()
     print('Total time: {}'.format((ten - tst)))
